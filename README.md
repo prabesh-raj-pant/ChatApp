@@ -17,25 +17,24 @@ A **FastAPI** based real-time chat application with **JWT Authentication**, **Ro
 
 ---
 ### Project directory information
-ChatApp/
-├── app/                              # Main application logic
-│   ├── __init__.py                   # Initialize app as a Python package
-│   ├── database.py                   # Database connection setup (SQLModel, PostgreSQL engine)
-│   ├── jwttoken.py                   # JWT encoding/decoding functions (token generation/verification)
-│   ├── main.py                       # FastAPI app entry point; includes router registration
-│   ├── models.py                     # Database models: User, Room, Message (ORM classes)
-│   ├── oauth2.py                     # OAuth2 password flow with JWT token retrieval 
-│   ├── routers/                      # API endpoints grouped by features
-│   │   ├── __init__.py               # Router package initializer
-│   │   ├── auth.py                   # Signup/Login API routes (JWT authentication)
-│   │   ├── chat.py                   # WebSocket chat logic and connection handler
-│   │   ├── hashing.py                # Password hashing logic (e.g., bcrypt/passlib)
-│   │   ├── room.py                   # Room creation and management routes
-│   │   ├── websocket.py (optional)   # (If present) WebSocket-specific functions
-│   │   └── __pycache__/              # Compiled router files (ignore)
-│   └── schemas.py                    # Pydantic schemas (request & response validation)
-│ 
-└── .env (optional, recommended)      # (Not shown but recommended) Secret keys, DB URL, JWT secret
+ChatApp/  
+├── app/ # Main application code  
+│ ├── **init**.py # Marks the app directory as a package  
+│ ├── database.py # Database connection and session setup  
+│ ├── jwttoken.py # JWT creation and decoding utilities  
+│ ├── main.py # FastAPI app entry point with all route registrations  
+│ ├── models.py # Database models (User, Room, Message)  
+│ ├── oauth2.py # OAuth2 flow and token retrieval  
+│ ├── routers/ # Organized API routes  
+│ │ ├── **init**.py  
+│ │ ├── auth.py # Authentication endpoints (signup, login)  
+│ │ ├── chat.py # WebSocket chat room handling  
+│ │ ├── room.py # Chat room CRUD endpoints  
+│ │ └── hashing.py # Password hashing using passlib/bcrypt   
+│ └── schemas.py # Pydantic schemas for request/response models   
+│   
+│    
+└── .env (recommended) # Environment variables (SECRET_KEY, DB URL, etc.)
 
 
 ---
