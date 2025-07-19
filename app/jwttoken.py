@@ -1,17 +1,14 @@
-from datetime import datetime, timedelta, timezone
-from typing import Annotated
-
+from datetime import datetime, timedelta, timezone 
 import jwt
-from fastapi import Depends, FastAPI, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jwt.exceptions import InvalidTokenError
-from passlib.context import CryptContext
-from .schemas import Token,TokenData
+from .schemas import TokenData
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
-SECRET_KEY = "73c34e01da25038628d56de7e9a649d370944a667cf9b7c7f66155ba7e0e6e37"
-ALGORITHM = "HS256"
-# ACCESS_TOKEN_EXPIRE_MINUTES = 30
+SECRET_KEY = os.getenv('SECRET_KEY')
+ALGORITHM = os.getenv('ALGORITHM') 
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
@@ -22,3 +19,14 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
+
+def verify_token(token:str,credentials_exception):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email = payload.get("sub")
+        if email is None:
+            raise credentials_exception
+        token_data = TokenData(email=email)
+    except InvalidTokenError:
+        raise credentials_exception
