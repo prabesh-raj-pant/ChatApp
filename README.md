@@ -1,8 +1,5 @@
 # ChatApp
 
-
-# Chat Application
-
 A **FastAPI** based real-time chat application with **JWT Authentication**, **Role-Based Access Control (RBAC)**, **WebSocket chat**, and **PostgreSQL** persistence. This app supports **admin** and **user** roles, secure authentication, chat rooms, and message broadcasting.
 
 ---
