@@ -4,7 +4,7 @@ import uvicorn
 from sqlmodel import  Session, SQLModel
 from . import schemas, models
 from app.database import engine
-
+from passlib.context import CryptContext
 
 app = FastAPI()
 def create_db_and_tables():
@@ -25,11 +25,24 @@ def on_startup():
 
  
 
+# authentication
+
+SECRET_KEY = "73c34e01da25038628d56de7e9a649d370944a667cf9b7c7f66155ba7e0e6e37"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 @app.post('/user')
-def createUser(request: schemas.UserCreate ):
-    return request
+def createUser(user_data: schemas.UserCreate, db: Session = Depends(get_session)):
+    hashed_password=pwd_context.hash(user_data.password)
+    
+    new_user=models.User(username=user_data.username, email=user_data.email, password=hashed_password, role=user_data.role)
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return new_user
 
 
 
