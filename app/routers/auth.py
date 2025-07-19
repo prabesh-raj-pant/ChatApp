@@ -16,6 +16,9 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 @router.post('/signup')
 def createUser(user_data: UserCreate, db: Session = Depends(get_session)):
+    user = db.query(User).filter(User.username == user_data.username).first()
+    if user:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Username Already taken")
     
     new_user=User(username=user_data.username, email=user_data.email, password=Hash.bcrypt(user_data.password), role=user_data.role)
     db.add(new_user)
@@ -33,7 +36,7 @@ def login(request:Login,db: Session = Depends(get_session)) :
     if not Hash.verify(user.password, request.password):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Incorrect Password")
     
-   
+    # generating  a jwt token
     return user
     
     

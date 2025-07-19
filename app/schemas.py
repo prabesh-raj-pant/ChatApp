@@ -1,10 +1,16 @@
 from pydantic import BaseModel, EmailStr
+from enum import Enum
 
+
+class Role(str, Enum):
+    admin = "admin"
+    user = "user"
+    
 class UserCreate(BaseModel):
     username: str
     email: EmailStr
-    role: str
     password: str
+    role: Role = Role.user
 
 class Login(BaseModel):
     username:str
@@ -14,7 +20,6 @@ class UserResponse(BaseModel):
     id: int
     username: str
     email: EmailStr
-    role: str
+    role: Role
 
-    class Config:
-        orm_mode = True
+    model_config = {"from_attributes": True}
