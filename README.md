@@ -213,5 +213,11 @@ OAuth2 only support username so it show username but you should enter email
 | **Room**    | `id`, `name`, `description`                                        |
 | **Message** | `id`, `room_id`, `user_id`, `content`, `timestamp`                 |
 
+**User**
+ ![Alt text](images_for_documentation/user_model.png)
 
- 
+ **Room**
+ ![Alt text](images_for_documentation/room_model.png)
+
+**Message**
+ ![Alt text](images_for_documentation/message_model.png)
