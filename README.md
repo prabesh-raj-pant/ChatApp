@@ -18,23 +18,23 @@ A **FastAPI** based real-time chat application with **JWT Authentication**, **Ro
 ---
 ### Project directory information
 ChatApp/  
-├── app/ # Main application code  
-│ ├── **init**.py # Marks the app directory as a package  
-│ ├── database.py # Database connection and session setup  
-│ ├── jwttoken.py # JWT creation and decoding utilities  
-│ ├── main.py # FastAPI app entry point with all route registrations  
-│ ├── models.py # Database models (User, Room, Message)  
-│ ├── oauth2.py # OAuth2 flow and token retrieval  
-│ ├── routers/ # Organized API routes  
-│ │ ├── **init**.py  
-│ │ ├── auth.py # Authentication endpoints (signup, login)  
-│ │ ├── chat.py # WebSocket chat room handling  
-│ │ ├── room.py # Chat room CRUD endpoints  
-│ │ └── hashing.py # Password hashing using passlib/bcrypt   
-│ └── schemas.py # Pydantic schemas for request/response models   
+├── app/                    # Main application code  
+│     ├── **init**.py           # Marks the app directory as a package  
+│     ├── database.py           # Database connection and session setup  
+│     ├── jwttoken.py           # JWT creation and decoding utilities  
+│     ├── main.py               # FastAPI app entry point with all route registrations  
+│     ├── models.py             # Database models (User, Room, Message)  
+│     ├── oauth2.py             # OAuth2 flow and token retrieval  
+│     ├── routers/          # Organized API routes  
+│     │     ├── **init**.py  
+│     │     ├── auth.py          # Authentication endpoints (signup, login)  
+│     │     ├── chat.py          # WebSocket chat room handling  
+│     │     ├── room.py          # Chat room CRUD endpoints  
+│     │     └── hashing.py       # Password hashing using passlib/bcrypt   
+│     └── schemas.py             # Pydantic schemas for request/response models   
 │   
 │    
-└── .env (recommended) # Environment variables (SECRET_KEY, DB URL, etc.)
+└── .env (recommended)           # Environment variables (SECRET_KEY, DB URL, etc.)
 
 
 ---
