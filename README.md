@@ -16,19 +16,89 @@ A **FastAPI** based real-time chat application with **JWT Authentication**, **Ro
 [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
 
 ---
+### Project directory information
+ChatApp/
+├── app/                              # Main application logic
+│   ├── __init__.py                   # Initialize app as a Python package
+│   ├── database.py                   # Database connection setup (SQLModel, PostgreSQL engine)
+│   ├── jwttoken.py                   # JWT encoding/decoding functions (token generation/verification)
+│   ├── main.py                       # FastAPI app entry point; includes router registration
+│   ├── models.py                     # Database models: User, Room, Message (ORM classes)
+│   ├── oauth2.py                     # OAuth2 password flow with JWT token retrieval 
+│   ├── routers/                      # API endpoints grouped by features
+│   │   ├── __init__.py               # Router package initializer
+│   │   ├── auth.py                   # Signup/Login API routes (JWT authentication)
+│   │   ├── chat.py                   # WebSocket chat logic and connection handler
+│   │   ├── hashing.py                # Password hashing logic (e.g., bcrypt/passlib)
+│   │   ├── room.py                   # Room creation and management routes
+│   │   ├── websocket.py (optional)   # (If present) WebSocket-specific functions
+│   │   └── __pycache__/              # Compiled router files (ignore)
+│   └── schemas.py                    # Pydantic schemas (request & response validation)
+│ 
+└── .env (optional, recommended)      # (Not shown but recommended) Secret keys, DB URL, JWT secret
 
-## 🚀 Features
 
-* ✅ **JWT Authentication (OAuth2 Password Flow)**
-* ✅ **Role-Based Access Control (Admin/User)**
-* ✅ **WebSocket Chat with Room IDs**
-* ✅ **Real-time messaging with PostgreSQL persistence**
-* ✅ **Secure Password Hashing**
-* ✅ **Admin-only room creation**
-* ✅ **User info retrieval via secured endpoint**
+---
+---
+
+## 📦 Project Setup
+
+### 1. Clone & Setup Virtual Environment
+
+```bash
+git clone https://github.com/yourusername/chat-app.git
+cd chat-app
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 2. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Configure `.env` file
+
+```
+DATABASE_URL=postgresql://user:password@localhost/chatapp
+SECRET_KEY=your_secret_key
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+```
+
+### 4. Run the App
+
+```bash
+uvicorn app.main:app --reload
+```
 
 ---
 
+## 🛡️ Authentication Details
+
+* **Token URL**: `/auth/login`
+* **Grant Type**: `password`
+* **Bearer Token Required** for protected endpoints (user info, room creation, WebSocket).
+
+---
+
+## 🛠️ Development Commands
+
+| Task         | Command                              |
+| ------------ | ------------------------------------ |
+| Start server | `uvicorn app.main:app --reload`      |
+| Migrate DB   | Auto-generated on startup (SQLModel) |
+| API Docs     | Visit `/docs` or `/redoc`            |
+
+---
+
+## 📌 Notes
+
+* Admin-only actions (like creating rooms) are protected via role-based dependencies.
+* All messages are persisted in PostgreSQL and can be extended with pagination. 
+
+---
 ## 🧱 API Endpoints Overview
 
 ### ✅ Authentication
@@ -144,68 +214,5 @@ OAuth2 only support username so it show username but you should enter email
 | **Room**    | `id`, `name`, `description`                                        |
 | **Message** | `id`, `room_id`, `user_id`, `content`, `timestamp`                 |
 
----
 
-## 📦 Project Setup
-
-### 1. Clone & Setup Virtual Environment
-
-```bash
-git clone https://github.com/yourusername/chat-app.git
-cd chat-app
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 2. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Configure `.env` file
-
-```
-DATABASE_URL=postgresql+psycopg2://user:password@localhost:5432/chatdb
-SECRET_KEY=your_secret_key
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-```
-
-### 4. Run the App
-
-```bash
-uvicorn app.main:app --reload
-```
-
----
-
-## 🛡️ Authentication Details
-
-* **Token URL**: `/auth/login`
-* **Grant Type**: `password`
-* **Bearer Token Required** for protected endpoints (user info, room creation, WebSocket).
-
----
-
-## 🛠️ Development Commands
-
-| Task         | Command                              |
-| ------------ | ------------------------------------ |
-| Start server | `uvicorn app.main:app --reload`      |
-| Migrate DB   | Auto-generated on startup (SQLModel) |
-| API Docs     | Visit `/docs` or `/redoc`            |
-
----
-
-## 📌 Notes
-
-* Admin-only actions (like creating rooms) are protected via role-based dependencies.
-* All messages are persisted in PostgreSQL and can be extended with pagination.
-* Easy integration with frontend clients (React, Vue, etc.).
-
----
-
-## 📜 License
-
-Licensed under the **MIT License**.
+ 
