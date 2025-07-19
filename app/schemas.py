@@ -6,6 +6,10 @@ class UserCreate(BaseModel):
     role: str
     password: str
 
+class Login(BaseModel):
+    username:str
+    password:str
+
 class UserResponse(BaseModel):
     id: int
     username: str
